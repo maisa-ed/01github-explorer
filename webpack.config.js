@@ -1,13 +1,28 @@
 const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+  
 module.exports = {
-    entry: path.resolve(__dirname, 'src', 'index.jsx'),
+    entry: {
+      app: `${__dirname}/src/index.jsx`
+    },
     output: {
-      path: path.resolve(__dirname, 'dist'),
-      filename: 'bundle.js'  
+      filename: '[name].js',
+      sourceMapFilename: '[name].js.map',
+      path: `${__dirname}/dist`
     },
+  devtool: 'source-map',
+  
     resolve: {
-        extensions: ['.js', '.jsx']
+        extensions: ['.js', '.jsx'],
     },
+    devServer: {
+      static: path.resolve(__dirname, 'public'),
+    },
+    plugins: [
+      new HtmlWebpackPlugin({
+        template: path.resolve(__dirname, 'public', 'index.html')
+      })
+    ],
     module: {
       rules: [
           {
